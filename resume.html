@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Resume</title>
+        <link rel="stylesheet" href="styles.css" />
+        <style>
+            body {
+                margin: 0;
+                font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+                line-height: 1.6;
+                background: radial-gradient(circle at top, #24344f 0%, #111827 45%, #090d16 100%);
+                color: #f3f6fb;
+            }
+            .top-banner {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 0;
+                background: linear-gradient(180deg, #24344f 0%, #111827 72%, #090d16 100%);
+                border-bottom: 1px solid rgba(142, 197, 255, 0.2);
+                box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+                min-height: 58px;
+            }
+
+            .banner-nav {
+                display: flex;
+                align-items: stretch;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .banner-button {
+                padding: 0 1.5rem;
+                background: transparent;
+                border: none;
+                border-right: 1px solid rgba(142, 197, 255, 0.16);
+                border-bottom: 2px solid rgba(255, 255, 255, 0);
+                color: #fff;
+                text-align: center;
+                font-size: 1rem;
+                font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+                font-weight: 700;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                text-decoration: none;
+                cursor: pointer;
+                transition: all 0.28s ease;
+                min-height: 58px;
+                align-self: stretch;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                min-width: 140px;
+                box-sizing: border-box;
+                white-space: nowrap;
+            }
+
+            .banner-button::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: rgba(255, 255, 255, 0.5);
+                transform: translateX(-50%);
+                transition: width 0.28s ease;
+            }
+
+            .banner-button:hover,
+            .banner-button.active {
+                background: rgba(142, 197, 255, 0.12);
+                box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.42);
+                color: #ffffff;
+            }
+
+            .banner-button:hover::after,
+            .banner-button.active::after {
+                width: 60%;
+            }
+
+            .page-shell {
+                width: min(1100px, calc(100% - 3rem));
+                margin: 0 auto;
+                box-sizing: border-box;
+                position: relative;
+                padding: 2rem 0 3rem;
+            }
+
+            .resume-content {
+                min-width: 0;
+                max-width: none;
+            }
+
+            .resume-hero {
+                margin-bottom: 2rem;
+            }
+
+            .resume-visual {
+                width: 100%;
+                min-height: 340px;
+                margin-bottom: 2rem;
+                overflow: hidden;
+                border-radius: 8px;
+                background: url("Images/CKGO5843.JPG") 50% center / cover no-repeat;
+                box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
+            }
+
+            h1 {
+                margin: 0 0 0.35rem;
+                font-size: clamp(2.2rem, 5vw, 3.1rem);
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #ffffff;
+                text-shadow: 0 8px 30px rgba(92, 144, 255, 0.25);
+            }
+
+            .subtitle {
+                margin: 0;
+                color: #a9b9d6;
+                font-size: 1.05rem;
+            }
+
+            .resume-grid {
+                display: grid;
+                gap: 1.25rem;
+            }
+
+            .resume-card {
+                padding: 1.35rem;
+                border-radius: 22px;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
+            }
+
+            .resume-card h2 {
+                margin: 0 0 0.85rem;
+                color: #ffffff;
+                font-size: 1.05rem;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+            }
+
+            .resume-card p {
+                margin: 0;
+                color: #c8d5e8;
+            }
+
+            .resume-role {
+                margin-bottom: 1.4rem;
+            }
+
+            .resume-role:last-child {
+                margin-bottom: 0;
+            }
+
+            .experience-list {
+                margin: 0;
+                padding-left: 1.4rem;
+                color: #dce8f8;
+            }
+
+            .experience-list > li {
+                padding-left: 0.35rem;
+            }
+
+            .resume-role h3 {
+                margin: 0 0 0.2rem;
+                color: #ffffff;
+                font-size: 1.05rem;
+            }
+
+            .resume-meta {
+                margin: 0 0 0.75rem;
+                color: #a9b9d6;
+                font-size: 0.95rem;
+            }
+
+            .resume-list {
+                margin: 0;
+                padding-left: 1.2rem;
+                color: #dce8f8;
+            }
+
+            .resume-list li + li {
+                margin-top: 0.55rem;
+            }
+
+            .top-anchor-wrap {
+                display: flex;
+                justify-content: center;
+                margin-top: 2rem;
+            }
+
+            .top-anchor {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.75rem 1.2rem;
+                border-radius: 999px;
+                border: 1px solid rgba(142, 197, 255, 0.35);
+                background: rgba(255, 255, 255, 0.06);
+                color: #8ec5ff;
+                text-decoration: none;
+                font-weight: 700;
+                box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+            }
+
+            .top-anchor:hover {
+                color: #ffffff;
+                border-color: rgba(197, 226, 255, 0.6);
+                background: rgba(142, 197, 255, 0.14);
+            }
+
+            @media (max-width: 560px) {
+.page-shell {
+                    width: calc(100% - 2rem);
+                    padding: 1.5rem 0 2.5rem;
+                }
+            }
+
+            @media (max-width: 980px) {
+                .resume-content {
+                    max-width: none;
+                }
+
+                .resume-visual {
+                    min-height: 260px;
+                    background: url("Images/CKGO5843.JPG") center center / cover no-repeat;
+                }
+            }
+        </style>
+    </head>
+    <body id="top">
+        <header class="top-banner">
+            <nav class="banner-nav" aria-label="Main">
+                <a class="banner-button" href="index.html">Home</a>
+                <a class="banner-button" href="aboutme.html">About Me</a>
+                <a class="banner-button active" href="resume.html" aria-current="page">Resume</a>
+                <a class="banner-button" href="churchservice.html">Church Service</a>
+                <a class="banner-button" href="budgetdashboard.html">Budget Tool</a>
+            </nav>
+        </header>
+        <main class="page-shell">
+            <aside class="resume-visual" aria-hidden="true"></aside>
+
+            <div class="resume-content">
+                <section class="resume-hero">
+                    <h1>Resume</h1>
+                    <p class="subtitle">Professional background, experience, and strengths collected in one place.</p>
+                </section>
+
+                <div class="resume-grid">
+                    <section class="resume-card">
+                        <h2>Profile</h2>
+                        <p>Motivated undergraduate student with a strong work ethic. Has a passion for learning and growing. Holding skills in organization, teamwork, customer service, and leadership. Showing excellence in collaboration and adaptation. Able to work in a fast-paced environment with the motivation to expand horizons and acquire knowledge.</p>
+                    </section>
+
+                    <section class="resume-card">
+                        <h2>Experience</h2>
+
+                        <ol class="experience-list">
+                            <li class="resume-role">
+                                <h3>Service Missionary - Retail Operations Assistant Administrator</h3>
+                                <p class="resume-meta">The Church of Jesus Christ of Latter-day Saints | January 2024 - April 2025</p>
+                                <ul class="resume-list">
+                                    <li>Coordinated supplies for distribution stores worldwide and distributed requested orders in a timely manner.</li>
+                                    <li>Analyzed and improved workflows to promote efficiency and create a lean environment.</li>
+                                    <li>Planned and coordinated hospitality for a weeklong conference with over 120 international distribution store supervisors.</li>
+                                    <li>Managed a shared email account responding to general questions and concerns regarding retail operations.</li>
+                                    <li>Assisted retail expansion by assigning products to bin locations and creating new store boxes for opening or remodeled distribution stores.</li>
+                                </ul>
+                            </li>
+
+                            <li class="resume-role">
+                                <h3>Service Missionary - Publishing Services Manager Assistant</h3>
+                                <p class="resume-meta">The Church of Jesus Christ of Latter-day Saints | May 2024 - January 2025</p>
+                                <ul class="resume-list">
+                                    <li>Worked closely with division managers to assist in creating an efficient work environment.</li>
+                                    <li>Led biweekly leadership meetings to gather and implement ideas and input.</li>
+                                    <li>Coordinated and scheduled trainings for 12 missionary team leaderships.</li>
+                                    <li>Coordinated projects such as FSY Phone Support and quality-checking the 2025 institute lesson plan.</li>
+                                    <li>Brainstormed ideas to create a fun and supportive environment for over 80 missionaries.</li>
+                                    <li>Conducted 1:1s with individual missionaries to offer support and nurture kindness within the department.</li>
+                                </ul>
+                            </li>
+
+                            <li class="resume-role">
+                                <h3>Front of House Manager</h3>
+                                <p class="resume-meta">Hale Centre Theatre | May 2021 - August 2023</p>
+                                <ul class="resume-list">
+                                    <li>Assisted with customer service operations during live performances, fostering a welcoming and enjoyable experience for guests.</li>
+                                    <li>Coordinated teams and resolved conflicts between patrons and staff professionally.</li>
+                                    <li>Handled end-of-day concession deposits and cash management duties.</li>
+                                    <li>Analyzed and kept up smoother front-of-house operations by ensuring safety for both patrons and employees.</li>
+                                    <li>Helped gather and sell concessions for each live performance.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </section>
+
+                    <section class="resume-card">
+                        <h2>Skills</h2>
+                        <ul class="resume-list">
+                            <li>Microsoft Office Suite (Word, Excel, Outlook)</li>
+                            <li>Email and Phone Communication</li>
+                            <li>Data Entry and Analysis</li>
+                            <li>Time Management</li>
+                            <li>Leadership and Initiative</li>
+                            <li>Team Collaboration</li>
+                            <li>Project Coordination</li>
+                        </ul>
+                    </section>
+
+                    <section class="resume-card">
+                        <h2>Education</h2>
+
+                        <div class="resume-role">
+                            <h3>High School Diploma</h3>
+                            <p class="resume-meta">Bingham High School | 2020 - 2023</p>
+                        </div>
+
+                        <div class="resume-role">
+                            <h3>Brigham Young University</h3>
+                            <p class="resume-meta">Currently Enrolled</p>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="top-anchor-wrap">
+                    <a class="top-anchor" href="#top">Back to Top</a>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

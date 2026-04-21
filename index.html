@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homepage</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --sidebar-width: clamp(240px, 28vw, 320px);
+      --tool-gradient: linear-gradient(180deg, #24344f 0%, #111827 72%, #090d16 100%);
+      --tool-border: rgba(142, 197, 255, 0.2);
+      --tool-hover: rgba(142, 197, 255, 0.12);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url("Images/IMG_4141.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+    }
+
+    .page-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      min-height: 100vh;
+      max-width: 100%;
+      background: var(--tool-gradient);
+      color: white;
+      padding: 24px 0 16px;
+      box-sizing: border-box;
+      border-right: 1px solid var(--tool-border);
+      box-shadow: 10px 0 24px rgba(0, 0, 0, 0.18), 18px 0 40px rgba(0, 0, 0, 0.08);
+      transform: translateZ(0);
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .sidebar h1,
+    .sidebar p,
+    .sidebar .sidebar-kicker,
+    .sidebar .sidebar-note {
+      margin: 0 0 16px;
+      padding: 0 30px;
+    }
+
+    .sidebar-kicker {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 10px;
+    }
+
+    .sidebar h1 {
+      font-size: 2rem;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.9) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .sidebar p {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      opacity: 0.95;
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar p::before {
+      content: "\2022";
+      position: absolute;
+      left: 30px;
+      opacity: 0.6;
+    }
+
+    .sidebar-note {
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: 18px;
+    }
+
+    .sidebar > .sidebar-copy {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      position: relative;
+      padding-bottom: 20px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar > .sidebar-copy::after {
+      content: '';
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.38) 18%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.38) 82%, rgba(255, 255, 255, 0) 100%);
+    }
+
+    .sidebar-top {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 0 0 12px;
+      min-height: 0;
+    }
+
+    .banner-face {
+      width: clamp(108px, 14vw, 138px);
+      height: clamp(108px, 14vw, 138px);
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center center;
+      border: 3px solid rgba(255, 255, 255, 0.24);
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .sidebar-buttons {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(4, minmax(48px, 1fr));
+      gap: 0;
+      margin: 0;
+      min-height: 0;
+      flex: 1;
+      width: 100%;
+      background: transparent;
+    }
+
+    .sidebar-button {
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(255, 255, 255, 0);
+      color: #fff;
+      text-align: center;
+      font-size: 1.05rem;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.28s ease;
+      min-height: clamp(48px, 8vh, 68px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .sidebar-button::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.5);
+      transform: translateX(-50%);
+      transition: width 0.28s ease;
+    }
+
+    .sidebar-button:hover {
+      background: var(--tool-hover);
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.32);
+    }
+
+    .sidebar-button:hover::after {
+      width: 60%;
+    }
+
+    .content {
+      flex: 1;
+      padding: 40px;
+      margin-left: var(--sidebar-width);
+    }
+
+    .content h2 {
+      margin-top: 0;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        padding-top: 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 1.9rem;
+      }
+
+      .banner-face {
+        width: 124px;
+        height: 124px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        padding-top: 18px;
+        border-right: none;
+        border-bottom: 1px solid var(--tool-border);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16), 0 18px 36px rgba(0, 0, 0, 0.08);
+      }
+
+      .sidebar-top {
+        min-height: auto;
+        padding-bottom: 12px;
+      }
+
+      .banner-face {
+        width: 96px;
+        height: 96px;
+      }
+
+      .sidebar > .sidebar-copy {
+        flex: none;
+        justify-content: flex-start;
+        padding-bottom: 20px;
+        margin-bottom: 0;
+      }
+
+      .sidebar h1,
+      .sidebar p,
+      .sidebar .sidebar-kicker,
+      .sidebar .sidebar-note {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .sidebar h1 {
+        font-size: 1.5rem;
+        margin-bottom: 14px;
+      }
+
+      .sidebar p {
+        font-size: 0.88rem;
+        margin-bottom: 12px;
+        padding-left: 30px;
+      }
+
+      .sidebar-kicker {
+        font-size: 0.72rem;
+        margin-bottom: 8px;
+      }
+
+      .sidebar-note {
+        font-size: 0.82rem;
+        margin-bottom: 14px;
+      }
+
+      .sidebar p::before {
+        left: 20px;
+      }
+
+      .sidebar > .sidebar-copy::after {
+        left: 20px;
+        right: 20px;
+      }
+
+      .sidebar-buttons {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto;
+        min-height: auto;
+      }
+
+      .sidebar-button {
+        min-height: 52px;
+        font-size: 0.9rem;
+      }
+
+      .content {
+        margin-left: 0;
+        padding: 24px 20px;
+        padding-top: min(100vh, 520px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <img src="Images/IMG_5103 (002).jpeg" class="banner-face" alt="Banner face" />
+      </div>
+
+      <div class="sidebar-copy">
+        <div class="sidebar-kicker">Portfolio</div>
+        <h1>Austin Nguyen</h1>
+        <div class="sidebar-note">Resume, service experience, and practical project work collected in one place.</div>
+        <p>801 879 5634</p>
+        <p>austinwin33@gmail.com</p>
+        <p>Browse the sections below to learn more</p>
+      </div>
+
+      <div class="sidebar-buttons">
+        <button class="sidebar-button" onclick="window.location.href='aboutme.html'">About Me</button>
+        <button class="sidebar-button" onclick="window.location.href='resume.html'">Resume</button>
+        <button class="sidebar-button" onclick="window.location.href='churchservice.html'">Church Service</button>
+        <button class="sidebar-button" onclick="window.location.href='budgetdashboard.html'">Budget Tool</button>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

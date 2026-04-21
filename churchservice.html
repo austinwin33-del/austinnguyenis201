@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Church Service</title>
+        <link rel="stylesheet" href="styles.css" />
+        <style>
+            body {
+                margin: 0;
+                font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+                line-height: 1.6;
+                background: radial-gradient(circle at top, #24344f 0%, #111827 45%, #090d16 100%);
+                color: #f3f6fb;
+            }
+            .top-banner {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 0;
+                background: linear-gradient(180deg, #24344f 0%, #111827 72%, #090d16 100%);
+                border-bottom: 1px solid rgba(142, 197, 255, 0.2);
+                box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+                min-height: 58px;
+            }
+
+            .banner-nav {
+                display: flex;
+                align-items: stretch;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .banner-button {
+                padding: 0 1.5rem;
+                background: transparent;
+                border: none;
+                border-right: 1px solid rgba(142, 197, 255, 0.16);
+                border-bottom: 2px solid rgba(255, 255, 255, 0);
+                color: #fff;
+                text-align: center;
+                font-size: 1rem;
+                font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+                font-weight: 700;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                text-decoration: none;
+                cursor: pointer;
+                transition: all 0.28s ease;
+                min-height: 58px;
+                align-self: stretch;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                min-width: 140px;
+                box-sizing: border-box;
+                white-space: nowrap;
+            }
+
+            .banner-button::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: rgba(255, 255, 255, 0.5);
+                transform: translateX(-50%);
+                transition: width 0.28s ease;
+            }
+
+            .banner-button:hover,
+            .banner-button.active {
+                background: rgba(142, 197, 255, 0.12);
+                box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.42);
+                color: #ffffff;
+            }
+
+            .banner-button:hover::after,
+            .banner-button.active::after {
+                width: 60%;
+            }
+
+            .page-shell {
+                width: min(1120px, calc(100% - 3rem));
+                margin: 0 auto;
+                padding: 3rem 0;
+            }
+
+            .hero {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) minmax(280px, 440px);
+                gap: 2rem;
+                align-items: center;
+                margin-bottom: 2rem;
+            }
+
+            h1 {
+                margin: 0 0 0.35rem;
+                font-size: clamp(2.2rem, 5vw, 3.2rem);
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #ffffff;
+                text-shadow: 0 8px 30px rgba(92, 144, 255, 0.25);
+            }
+
+            .subtitle {
+                max-width: 680px;
+                margin: 0;
+                color: #a9b9d6;
+                font-size: 1.08rem;
+            }
+
+            .service-slideshow {
+                position: relative;
+                min-height: 320px;
+                overflow: hidden;
+                border-radius: 24px;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
+            }
+
+            .service-slide {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.8s ease;
+            }
+
+            .service-slide.active {
+                opacity: 1;
+            }
+
+            .service-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1.25rem;
+            }
+
+            .service-card {
+                padding: 1.35rem;
+                border-radius: 22px;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
+            }
+
+            .service-card.wide {
+                grid-column: 1 / -1;
+            }
+
+            .service-card h2 {
+                margin: 0 0 0.85rem;
+                color: #ffffff;
+                font-size: 1.05rem;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+            }
+
+            .service-card h3 {
+                margin: 0 0 0.2rem;
+                color: #ffffff;
+                font-size: 1.05rem;
+            }
+
+            .service-card p {
+                margin: 0;
+                color: #c8d5e8;
+            }
+
+            .service-meta {
+                margin: 0 0 0.75rem;
+                color: #a9b9d6;
+                font-size: 0.95rem;
+            }
+
+            .service-list {
+                margin: 1rem 0 0;
+                padding-left: 1.2rem;
+                color: #dce8f8;
+            }
+
+            .service-list strong {
+                color: #ffffff;
+            }
+
+            .service-list li + li {
+                margin-top: 0.55rem;
+            }
+
+            .tableau-card {
+                margin-top: 1.25rem;
+                padding: 1.35rem;
+                border-radius: 22px;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
+            }
+
+            .tableauPlaceholder {
+                width: 100%;
+                min-height: 320px;
+            }
+
+            .tableauPlaceholder img {
+                max-width: 100%;
+            }
+
+            @media (max-width: 820px) {
+                .page-shell {
+                    width: calc(100% - 2rem);
+                    padding: 2rem 0;
+                }
+
+                .hero,
+                .service-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .service-slideshow {
+                    min-height: 260px;
+                }
+
+                .service-card.wide {
+                    grid-column: auto;
+                }
+            }
+</style>
+    </head>
+    <body>
+        <header class="top-banner">
+            <nav class="banner-nav" aria-label="Main">
+                <a class="banner-button" href="index.html">Home</a>
+                <a class="banner-button" href="aboutme.html">About Me</a>
+                <a class="banner-button" href="resume.html">Resume</a>
+                <a class="banner-button active" href="churchservice.html" aria-current="page">Church Service</a>
+                <a class="banner-button" href="budgetdashboard.html">Budget Tool</a>
+            </nav>
+        </header>
+
+        <main class="page-shell">
+            <section class="hero">
+                <div>
+                    <h1>Missionary Service</h1>
+                    <p class="subtitle">The Church of Jesus Christ of Latter-day Saints</p>
+                    <p class="service-meta">September 2023 - April 2025</p>
+                </div>
+                <div class="service-slideshow" id="service-slideshow" aria-label="Missionary service photos"></div>
+            </section>
+
+            <section class="service-grid" aria-label="Missionary service experience">
+                <article class="service-card wide">
+                    <h2>Birmingham Alabama Mission</h2>
+                    <p>
+                        Served a full-time mission for The Church of Jesus Christ of Latter-day Saints, beginning in the
+                        Birmingham Alabama Mission as a proselyting missionary, where I taught the gospel, worked closely
+                        with individuals and families, and developed strong communication, teaching, and service skills.
+                    </p>
+                </article>
+
+                <article class="service-card wide">
+                    <h2>Salt Lake City South Mission</h2>
+                    <p>
+                        Later served in the Salt Lake City South Mission, supporting several Church departments in
+                        operational, administrative, and service-focused roles.
+                    </p>
+                    <ul class="service-list">
+                        <li>
+                            <strong>Materials Management / Retail Operations Team:</strong> supported distribution store
+                            expansion efforts and helped coordinate supplies and operational needs.
+                        </li>
+                        <li>
+                            <strong>Publishing Services Department:</strong> served as a management assistant helping
+                            oversee and support 90+ missionaries.
+                        </li>
+                        <li>
+                            <strong>Priesthood and Family Department:</strong> led FSY phone support for North America,
+                            assisting with communication and service coordination.
+                        </li>
+                        <li>
+                            <strong>Global Services:</strong> served on the Church's web feedback team, helping respond
+                            to and support online user needs.
+                        </li>
+                    </ul>
+                </article>
+            </section>
+
+            <section class="tableau-card" aria-label="Growth of the Church of Jesus Christ of Latter-day Saints">
+                <div class="tableauPlaceholder" id="viz1776729270934" style="position: relative">
+                    <noscript>
+                        <a href="#">
+                            <img
+                                alt="Growth of the Church of Jesus Christ of Latter-day Saints"
+                                src="https://public.tableau.com/static/images/Gr/GrowthoftheChurchofJesusChristofLatter-daySaints/Sheet1/1_rss.png"
+                                style="border: none"
+                            />
+                        </a>
+                    </noscript>
+                    <object class="tableauViz" style="display: none">
+                        <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+                        <param name="embed_code_version" value="3" />
+                        <param name="site_root" value="" />
+                        <param name="name" value="GrowthoftheChurchofJesusChristofLatter-daySaints/Sheet1" />
+                        <param name="tabs" value="no" />
+                        <param name="toolbar" value="yes" />
+                        <param
+                            name="static_image"
+                            value="https://public.tableau.com/static/images/Gr/GrowthoftheChurchofJesusChristofLatter-daySaints/Sheet1/1.png"
+                        />
+                        <param name="animate_transition" value="yes" />
+                        <param name="display_static_image" value="yes" />
+                        <param name="display_spinner" value="yes" />
+                        <param name="display_overlay" value="yes" />
+                        <param name="display_count" value="yes" />
+                        <param name="language" value="en-US" />
+                    </object>
+                </div>
+            </section>
+        </main>
+
+        <script type="text/javascript">
+            var divElement = document.getElementById("viz1776729270934");
+            var vizElement = divElement.getElementsByTagName("object")[0];
+            vizElement.style.width = "100%";
+            vizElement.style.height = divElement.offsetWidth * 0.75 + "px";
+            var scriptElement = document.createElement("script");
+            scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
+
+            var serviceSlides = [
+                "Images/Image (4).jpg",
+                "Images/Image (5).jpg",
+                "Images/IMG_4583.jpeg",
+                "Images/IMG_4596.jpg",
+                "Images/IMG_4657 - Copy.jpg",
+                "Images/IMG_4700.JPG",
+                "Images/IMG_5018.JPG",
+                "Images/IMG_5021.JPG",
+                "Images/IMG_5025.JPG",
+                "Images/IMG_7562.jpg",
+                "Images/IMG_8028.jpg",
+                "Images/received_2587527614738718.jpeg"
+            ];
+            var slideshow = document.getElementById("service-slideshow");
+
+            serviceSlides.forEach(function (slideSrc, index) {
+                var slide = document.createElement("img");
+                slide.className = "service-slide" + (index === 0 ? " active" : "");
+                slide.src = slideSrc;
+                slide.alt = "Missionary service photo";
+                slide.addEventListener("error", function () {
+                    slide.remove();
+                    var remainingSlides = slideshow.querySelectorAll(".service-slide");
+                    if (remainingSlides.length && !slideshow.querySelector(".service-slide.active")) {
+                        remainingSlides[0].classList.add("active");
+                    }
+                });
+                slideshow.appendChild(slide);
+            });
+
+            if (serviceSlides.length > 1) {
+                var currentSlide = 0;
+                setInterval(function () {
+                    var slides = slideshow.querySelectorAll(".service-slide");
+                    if (slides.length < 2) {
+                        return;
+                    }
+                    slides[currentSlide].classList.remove("active");
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add("active");
+                }, 4000);
+            }
+        </script>
+    </body>
+</html>
